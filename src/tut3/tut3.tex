@@ -1,0 +1,36 @@
+\documentclass{exam}
+\usepackage{amsmath}
+
+\title{COMP2120 Tutorial Exercise}
+\author{YUAN Wenxuan (UID: 3036292740)}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+Try to use the Booth's Algorithm to multiply $5=101$(multiplicand) and $3=011$(multiplier),
+write multiplication table as in the slides. (Hint: use 2's complement when subtracting) \\
+
+
+The 2's complement of $5=0101$ is $1011$.
+The 2's complement of $3=0011$ is $1101$.
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Multiplier         & Operation & Partial Sum & Comment            \\ \hline
+        $0011$             & init      & 0000 0000   & ~                  \\
+        $001\underline{1}$ & sub       & 1011 0000   & add 2's complement \\
+        $001\underline{1}$ & shift     & 1101 1000   & sign extend        \\
+        $00\underline{1}1$ & shift     & 1110 1100   & sign extend        \\
+        $0\underline{0}11$ & add       & 0011 1100   & ignore carry       \\
+        $0\underline{0}11$ & shift     & 0001 1110   & ~                  \\
+        $\underline{0}011$ & shift     & 0000 1111   & 15                 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+
+
+\end{document}
