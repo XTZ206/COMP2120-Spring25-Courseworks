@@ -1,0 +1,77 @@
+% \documentclass{article}
+% \usepackage{amsmath}
+
+
+% \title{COMP2120 Tutorial 2}
+% \author{YUAN Wenxuan (UID: 3036292740)}
+% \date{\today}
+
+% \begin{document}
+
+% \subsection*{Tutorial Exercise}
+% A machine uses 36-bit word to represent single-precision floating point numbers as follows:
+
+% \begin{table}[!ht]
+%     \centering
+%     \begin{tabular}{|c|c|c|}
+%         \hline
+%         S & 11-bit exponent (E) & 24-bit Significand (M) \\ \hline
+%     \end{tabular}
+% \end{table}
+
+% The value presented is given by $(-1)^{S} \times 1.M \times 2^{E-1023}$.
+
+% (a) Write down the bit pattern corresponding to the value 7.375 \\
+% (b) Write down the value corresponding to the bit pattern C05D00000 \\
+% (c) What is the largest positive number that can be represented, assuming there is no pattern with special meaning in the representation? \\
+% (d) What is the smallest positive number other than 0 that can be represented, assuming no pattern with special meaning?
+
+% \end{document}
+
+\documentclass{exam}
+\usepackage{amsmath}
+
+\title{COMP2120 Tutorial Exercise}
+\author{YUAN Wenxuan (UID: 3036292740)}
+\date{\today}
+
+\begin{document}
+\maketitle
+% \begin{questions}
+A machine uses 36-bit word to represent single-precision floating point numbers as follows:
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        S & 11-bit exponent (E) & 24-bit Significand (M) \\ \hline
+    \end{tabular}
+\end{table}
+
+
+The value presented is given by $(-1)^{S} \times 1.M \times 2^{E-1023}$.
+
+\begin{parts}
+    \part Write down the bit pattern corresponding to the value 7.375
+    \part Write down the value corresponding to the bit pattern C05D00000
+    \part What is the largest positive number that can be represented, assuming there is no pattern with special meaning in the representation?
+    \part What is the smallest positive number other than 0 that can be represented, assuming no pattern with special meaning?
+\end{parts}
+% \end{questions}
+
+\subsection*{(a)}
+$7.375_{10} = 111.011_{2} = 1.11011_{2} \times 2^{2}$
+Thus, $S = 0,\ E = 1025 = 100\ 0000\ 0001_{2},\ M = (1101\ 1000\ 0000\ \dots)_{2}$
+Hence, the bit pattern is $0100\ 0000\ 0001\ 1101\ 1000\ 0000\ 0000\ 0000\ 0000_{2} = 401D80000_{16}$
+
+\subsection*{(b)}
+$C05D00000_{16} = 1100\ 0000\ 0101\ 1101\ 0000\ 0000\ 0000\ 0000\ 0000_{2}$ \\
+Thus, $S = 1, E = 100\ 0000\ 0101_{2} = 1029, M = (1101\ 0000\ \dots)_{2}, 1.M = 1.1101_{2} = 1.8125$ \\
+Hence, the value is $-1 \times 2^{1029 - 1023} \times 1.8125 = -116.0$
+
+\subsection*{(c)}
+The largest positive number is $2^{1024} - 2^{1000}$ when $S = 0, E = 111\ 1111\ 1111, M = 1111\ 1111\ \dots\ 1111$.
+
+\subsection*{(d)}
+The smallest positive number is $2^{-1023}$ when $S = 0, E = 000\ 0000\ \dots\ 0000, M = 0000\ 0000\ \dots\ 0000$.
+
+\end{document}
