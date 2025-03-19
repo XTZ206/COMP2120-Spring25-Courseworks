@@ -1,0 +1,55 @@
+\documentclass[answers]{exam}
+\usepackage{amsmath}
+
+\title{COMP2120 Tutorial Exercise}
+\author{YUAN Wenxuan (UID: 3036292740)}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+Consider a hypothetical machine with 64K words of cache memory, with size of 128 words. (1K = 1024)
+
+\begin{questions}
+
+\question{How many blocks are there in the cache memory?}
+\begin{solution}
+    $ 64K / 128 = 512 $ blocks.
+\end{solution}
+
+\question{How many sets are there in the cache memory if}
+\begin{parts}
+    \part Direct-map cache organization is used?
+    \begin{solution}
+        $ 512 / 1 = 512 $ sets.
+    \end{solution}
+    \part Four-way set associative cache organization is used?
+    \begin{solution}
+        $ 512 / 4 = 128 $ sets.
+    \end{solution}
+\end{parts}
+
+\question{Write down the number of bits in each field for a 32-bit address. (The memory is byte address, i.e. each word is 4 bytes) for both direct-map and four-way set associate cache.}
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Cache Tag & Cache Set Number & Offset in the block \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\begin{solution}\\
+    Direct-map cache organization: 
+    Offset: 9 bits, Set Number: 9 bits, Tag: 14 bits.\\
+    Four-way set associative cache organization:
+    Offset: 9 bits, Set Number: 7 bits, Tag: 16 bits. 
+\end{solution}
+
+\question{Calculate the average memory access time if the cache hit time is 8ns, cache miss penalty is 105ns and the cache hit rate is $95.0\%$.}
+\begin{solution}
+    $\text{Average Memory Access Time} = 8 + (1 - 95\%) \times 105 = 13.25\text{ns}.$
+\end{solution}
+
+\end{questions}
+\end{document}
