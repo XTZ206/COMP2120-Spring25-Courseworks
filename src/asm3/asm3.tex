@@ -1,0 +1,121 @@
+\documentclass[answers]{exam}
+\usepackage{amsmath}
+\usepackage{minted}
+
+\title{COMP2120 Assignment 3}
+\author{YUAN Wenxuan (UID: 3036292740)}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+    \question \textbf{2-way Set Associative Cache Memory} \\
+    Consider a hypothetical machine with 1K words of cache memory. They are in two-way set associative organization, with cache block size of 128 words, using LRU replacement algorithm.
+    Suppose the hit time is 10ns, the time to transfer the first word from main memory to cache is 60ns, while subsequent words require 12ns/word. \\
+    Consider the following read pattern (in blocks of 128 words, and block id starts from 0):
+    \begin{listing}[htb]
+        \centering
+        \begin{minted}{c}
+        1 2 3 5 6 2 3 4 9 10 11 6 3 6 1 7 8 4 5 9 11 1 2 4 5 12 13 14 15 13 14
+        \end{minted}
+    \end{listing} \\
+    and assume each block contains an average of 48 references.
+
+    \begin{parts}
+        \part What is the cache miss penalty (i.e., time to transfer one block of data from main memory to cache memory)?
+        \begin{solution}
+            The cache miss penalty is $60 + 12 \times 127 = 1584$ns.
+        \end{solution}
+
+        \part Write down the content of the cache memory (for all the blocks) at the end of the memory references, assuming that the cache is empty at the beginning.
+        \begin{solution}
+            \begin{tabular}{|c|c|c|c|}
+                \hline
+                Set 0 & Set 1 & Set 2 & Set 3 \\
+                \hline
+                4     & 13    & 14    & 11    \\
+                \hline
+                12    & 5     & 2     & 15    \\
+                \hline
+            \end{tabular}
+        \end{solution}
+
+        \part Write down the number of cache misses (the first reading of a block is also considered a miss), and the cache hit rate.
+        \begin{solution}
+            The number of cache misses is 22, thus the cache hit rate is $1 - \frac{22}{31 \times 48} = 98.5215\% $
+        \end{solution}
+
+        \part Calculate the average memory access time.
+        \begin{solution}
+            The average memory access time is $10 + (1 - 98.5215\%) \times 1584 = 33.4194$ns.
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question \textbf{Direct-Mapped Cache Memory} \\
+    Redo Question 1 if the cache is the same, but in direct-mapped organization, and the cache hit time is 9ns instead.
+
+    \begin{parts}
+        \part What is the cache miss penalty (i.e., time to transfer one block of data from main memory to cache memory)?
+
+        \begin{solution}
+            The cache miss penalty is $60 + 12 \times 127 = 1584$ns.
+        \end{solution}
+
+        \part Write down the content of the cache memory (for all the blocks) at the end of the memory references, assuming that the cache is empty at the beginning.
+        \begin{solution}
+            \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+                \hline
+                Block 0 & Block 1 & Block 2 & Block 3 & Block 4 & Block 5 & Block 6 & Block 7 \\
+                \hline
+                8       & 1       & 2       & 11      & 12      & 13      & 14      & 15      \\
+                \hline
+            \end{tabular}
+        \end{solution}
+
+        \part Write down the number of cache misses (the first reading of a block is also considered a miss), and the cache hit rate.
+        % TODO: Recalculate the expression with scientific calculator.
+        \begin{solution}
+            The number of cache misses is 21, thus the cache hit rate is $1 - \frac{21}{31 \times 48} = 98.5887\% $
+        \end{solution}
+
+        % TODO: Recalculate the expression with scientific calculator.
+        \part Calculate the average memory access time.
+        \begin{solution}
+            The average memory access time is $9 + (1 - 98.5887\%) \times 1584 = 31.3548$ns.
+        \end{solution}
+    \end{parts}
+
+    \question \textbf{Hard Disk access} \\
+    Consider a Hard Disk with an average seek time of 12ms and rotation speed of 7200rpm, and an average number of 500 sectors per track. Assume negligible transfer time. \\
+
+    \begin{parts}
+        \part What is the average rotation latency?
+        \begin{solution}
+            The average rotation latency is $\frac{60 \times 1000}{7200} \times \frac{1}{2} = 4.1667$ms.
+        \end{solution}
+
+        \part What is the average time to rotate for 1 sector?
+        \begin{solution}
+            The average time is $\frac{1}{500} \times \frac{1000}{120} = 0.0167$ms.
+        \end{solution}
+
+        \part Consider the access of 5 sectors. Calculate the time required (ignoring transfer time, but including rotation time for reading a sector) if
+        \begin{subparts}
+            % TODO: Recalculate the expression with scientific calculator.
+            \subpart The sectors are consecutive in the same track.
+            \begin{solution}
+                The required time is $12 + 4.1667 + 5 \times 0.0167 = 16.25$ms.
+            \end{solution}
+
+            \subpart The sectors are scattered in various places in the HDD.
+            \begin{solution}
+                The required time is $5 \times (12 + 4.1667 + 0.0167) = 80.9167$ms.
+            \end{solution}
+        \end{subparts}
+    \end{parts}
+
+\end{questions}
+
+\end{document}
