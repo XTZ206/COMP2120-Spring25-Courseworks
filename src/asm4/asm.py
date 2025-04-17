@@ -137,7 +137,7 @@ def main():
                 result = compile(fin.readlines())
 
             with open(sys.argv[3], 'w') as fout:
-                fout.writelines(l + '\n' for l in result)
+                fout.writelines(l + '\r\n' for l in result)
 
     else:
         print("usage: python3 asm.py <input filepath> -o <output filepath>")
