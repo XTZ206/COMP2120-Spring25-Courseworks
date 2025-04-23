@@ -123,35 +123,35 @@ PC <- mem[MAR]
     you may need to find the new address of \mintinline{text}|P1|, and also in line 4 \dots
 
     \begin{solution}
-        The following is the modified assembled code:
+        The following is the modified program and corresponding assembled code:
         \begin{minted}{text}
-0000H:  01040404
-0004H:  0600ff01 0000007c
-000CH:  05010002
-0010H:  0600ff03 00000080
-0018H:  0501000a
-001CH:  0c00ff00 00000044
-0024H:  00040b04
-0028H:  00010201
-002CH:  01030105
-0030H:  0802ff00 00000018
-0038H:  0704ff00 00000084
-0040H:  09000000
-0044H:  0a0c0000
-0048H:  0a0d0000
-004CH:  0600ff0d 0000007c
-0054H:  010b0b0b
-0058H:  050a000c
-005CH:  030c0d0d
-0060H:  0802ff00 0000006c
-0068H:  010b0c0c
-006CH:  050c000b
-0070H:  0b00000d
-0074H:  0b00000c
-0078H:  0d000000
-007CH:  00000001
-0080H:  0000000a
-0084H:  00000000
+    SUB     R4,R4,R4    0000H:  01040404
+    LD      P1,R1       0004H:  0600ff01 0000007c
+    MOV     R1,R1       000CH:  05010002
+    LD      P2,R3       0010H:  0600ff03 00000080
+L:  MOV     R1,R10      0018H:  0501000a
+    CALL    SQ          001CH:  0c00ff00 00000044
+    ADD     R4,R11,R4   0024H:  00040b04
+    ADD     R1,R2,R1    0028H:  00010201
+    SUB     R3,R1,R5    002CH:  01030105
+    BNZ     L           0030H:  0802ff00 00000018
+    ST      R4,P        0038H:  0704ff00 00000084
+    HLT                 0040H:  09000000
+SQ: PUSH    R12         0044H:  0a0c0000
+    PUSH    R13         0048H:  0a0d0000
+    LD      P1,R13      004CH:  0600ff0d 0000007c
+    SUB     R11,R11,R11 0054H:  010b0b0b
+    MOV     R10,R12     0058H:  050a000c
+    AND     R12,R13,R13 005CH:  030c0d0d
+    BNZ     L2          0060H:  0802ff00 0000006c
+    SUB     R11,R12,R12 0068H:  010b0c0c
+L2: MOV     R12,R11     006CH:  050c000b
+    POP     R13         0070H:  0b00000d
+    POP     R12         0074H:  0b00000c
+    RET                 0078H:  0d000000
+P1: .WORD   1           007CH:  00000001
+P2: .WORD   A           0080H:  0000000a
+P:  .WORD               0084H:  00000000
         \end{minted}
         You can also find it in the attached file \mintinline{text}|prog3|
     \end{solution}
