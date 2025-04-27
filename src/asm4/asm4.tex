@@ -84,12 +84,14 @@
         In \mintinline{text}|CALL|:
         \begin{minted}{text}
 MAR <- PC
-MAR <- mem[MAR]
+MBR <- mem[MAR]
+MAR <- MBR
 PC <- PC + 4
 TEMP <- MAR
 SP <- SP - 4
 MAR <- SP
-mem[MAR] <- PC
+MBR <- PC
+mem[MAR] <- MBR
 MAR <- TEMP
 PC <- MAR        
         \end{minted}
@@ -97,7 +99,8 @@ PC <- MAR
         \begin{minted}{text}
 MAR <- SP
 SP <- SP + 4
-PC <- mem[MAR]     
+MBR <- mem[MAR]
+PC <- MBR    
         \end{minted}
     \end{solution}
 
@@ -127,7 +130,7 @@ PC <- mem[MAR]
         \begin{minted}{text}
     SUB     R4,R4,R4    0000H:  01040404
     LD      P1,R1       0004H:  0600ff01 0000007c
-    MOV     R1,R1       000CH:  05010002
+    MOV     R1,R2       000CH:  05010002
     LD      P2,R3       0010H:  0600ff03 00000080
 L:  MOV     R1,R10      0018H:  0501000a
     CALL    SQ          001CH:  0c00ff00 00000044
