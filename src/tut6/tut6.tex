@@ -1,0 +1,114 @@
+\documentclass[answers]{exam}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{minted}
+\usepackage{multirow}
+\usepackage{array}
+
+\title{COMP2120 Tutorial Exercise}
+\author{YUAN Wenxuan (UID: 3036292740)}
+\date{\today}
+\pagestyle{plain}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+
+    \question{Programmed I/O} \\
+    An intelligent thermometer is installed in a room to detect the current room temperature.
+    The thermometer is connected to the onboard computer with a Control and Status Register \mintinline{text}|TCSR| and a Buffer Register \mintinline{text}|TBR|.
+    The current room temperature is displayed on the panel of the air conditioner on two 7-segment LEDs, with 2 buffer register \mintinline{text}|LEDBR1| and \mintinline{text}|LEDBR2| for display.\\
+    The \mintinline{text}|TCSR| has the following format:
+    \begin{itemize}
+        \item[] Bit 0   Thermometer Ready bit, the thermometer is ready
+        \item[] Bit 1   Set this bit to start reading the temperature
+        \item[] Bit 2   Reading is available in \mintinline{text}|TBR|, automatically cleared after data read
+        \item[] Bit 3   Set this bit to 1 to turn on the compressor, 0 to turn off
+    \end{itemize}
+
+    For \mintinline{text}|LEDBR1|, \mintinline{text}|LEDBR2|, just write the corresponding digit (in integer) to the buffer register.
+
+    Write an assembly language program using \textit{Programmed I/O} to read the room temperature and display on the panel. (You may invent your own instruction set as long as it is reasonable. Comment your program so that it can be understood.)
+
+    \begin{solution}
+        \begin{minted}{text}
+L1:     LOAD    TCSR,R2
+        AND     R2,#0x1,R3  # check bit 0 thermometer ready
+        BZ      L1          # if not ready, loop and wait
+        MOV     #0x2,R1     # set bit 1 to 1, start reading
+        ST      R1,TCSR     # start reading
+L2:     LD      TCSR,R2     
+        AND     R2,#0x4,R3  # check bit 2 reading available
+        BZ      L2          # if not available, loop and wait
+        LD      TBR,R0
+        CALL    DIV         # input R0, output R1,R2 (R1 remainder, R2 quotient)
+        ST      R1,LEDBR1   # R1 remainder, the second digit
+        ST      R2,LEDBR2   # R2 quotient, the first digit
+        HLT
+DIV:    PUSH    R3          # R3 is modified in DIV, thus first push it
+        SUB     R1,R1,R1    # R1 = 0
+        MOV     R0,R2       # R2 = R0
+L3:     SUB     R0,#0xa,R0  # R0 -= 10
+        BLZ     L4          # goto L4 if result < 0
+        ADD     R1,#0x1,R1  # R1 += 1
+        MOV     R0,R2       # R2 = R0
+        BR      L3
+L4:     POP     R3          # restore R3
+        RET
+    \end{minted}
+    \end{solution}
+
+    \newpage
+
+    \question{\textbf{Addressing Modes}} \\
+    Consider implementing a displacement mode in the machine in Asg2/4, with \mintinline{text}|MBR| connecting to both \mintinline{text}|S1-Bus| and \mintinline{text}|S2-Bus|.
+
+    \begin{center}
+        \begin{minted}{text}
+            ST  DISP1(R1), DISP2(R3)
+        \end{minted}
+    \end{center}
+
+    \begin{table}[htb]
+        \centering
+        \setlength{\tabcolsep}{30pt}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \multicolumn{1}{|c|}{\mintinline{text}|ST|}
+             & \multicolumn{1}{c|}{\mintinline{text}|DISP(R1)|}
+             & \multicolumn{1}{c|}{\mintinline{text}|-|}
+             & \mintinline{text}|DISP2(R3)|                     \\ \hline\hline
+            \multicolumn{4}{|c|}{\mintinline{text}|DISP1|}      \\ \hline
+            \multicolumn{4}{|c|}{\mintinline{text}|DISP2|}      \\ \hline
+        \end{tabular}
+    \end{table}
+
+    \begin{solution}
+        \begin{minted}{text}
+RFOUT1 <- R1
+MAR <- PC
+MBR <- mem[MAR] # MBR = DISP1
+PC <- PC + 4
+A <- RFOUT1
+B <- MBR
+C <- A + B
+MAR <- C
+TEMP <- MAR     # TEMP = DISP1 + (R1)
+
+RFOUT1 <- R3
+MAR <- PC
+MBR <- mem[MAR]
+PC <- PC + 4
+A <- RFOUT1
+B <- MBR
+C <- A + B      # C = DISP2 + (R3)
+MAR <- TEMP     # MAR = DISP1 + (R1)
+MBR <- mem[MAR] # MBR = (DISP1 + R1)
+MAR <- C        # MAR = DISP2 + (R3)
+mem[MAR] <- MBR # mem[DISP2 + R3] = MBR = mem[DISP1 + R1]
+        \end{minted}
+    \end{solution}
+
+\end{questions}
+\end{document}
