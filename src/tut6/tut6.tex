@@ -86,6 +86,12 @@ L4:     POP     R3          # restore R3
 
     \begin{solution}
         \begin{minted}{text}
+Fetch:
+MAR <- PC
+IR <- mem[MAR]
+PC <- PC + 4
+
+Execute: 
 RFOUT1 <- R1
 MAR <- PC
 MBR <- mem[MAR] # MBR = DISP1
