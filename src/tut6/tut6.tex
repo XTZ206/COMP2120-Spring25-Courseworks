@@ -33,7 +33,7 @@
 
     \begin{solution}
         \begin{minted}{text}
-L1:     LOAD    TCSR,R2
+L1:     LD    TCSR,R2
         AND     R2,#0x1,R3  # check bit 0 thermometer ready
         BZ      L1          # if not ready, loop and wait
         MOV     #0x2,R1     # set bit 1 to 1, start reading
