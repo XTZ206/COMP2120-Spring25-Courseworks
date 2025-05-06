@@ -35,25 +35,21 @@ Bit 6       =0 if odd parity, 1 if even parity
 
     \begin{solution}
         \begin{minted}{text}
-L1:     LD      SCSR,R1
+        LD      SCSR, R1
         AND     R1, #0x1, R2    # check bit 0 device error
-        BZ      L1              # if error, loop and wait
-L2:     LD      SCSR, R1
-        AND     R1, #0x2, R2    # check bit 1 device ready
-        BNZ     L2              # if not ready, loop and wait
-        MOV     #0x62, SCSR     # set bit 3-5 to 100, speed = 115200 bps
-                                # set bit 6 to 1, even parity
+        BNZ     END             # if error, goto END
+CHECK:  AND     R1, #0x2, R2    # check bit 1 device ready
+        BZ      CHECK           # if not ready, loop and wait
+        ST      #0x4a, SCSR     # bit pattern 01001000 
+                                # speed = 115200 bps even parity
         SUB     R1, R1, R1      # R1 = 0
-L3:     LD      LINE(R1), R2    # load char from LINE + R1
-        MOV     R2, SBRO        # write to output buffer register
+RUN:    LD      LINE(R1), R2    # load char from LINE[R1]
+        ST      R2, SBRO        # write to output buffer register
         ADD     R1, #0x1, R1    # R1 += 1
         SUB     #0xa, R1, R2    # check if 10 chars are written
-        BNZ     L3              # if R1 != 10, goto L3 (continue loop)
-        HLT
+        BNZ     RUN             # if R1 != 10, goto RUN (continue loop)
+END:    HLT
         \end{minted}
-
-        % if bit 3-5 is 100 (5, 4, 3) MOV #0x62
-        % if bit 3-5 is 001 (3, 4, 5) MOV #0x4a
     \end{solution}
 
     \pagebreak
@@ -75,20 +71,26 @@ L3:     LD      LINE(R1), R2    # load char from LINE + R1
 
     \begin{solution}
         \begin{minted}{text}
+Fetch:
 MAR <- PC
+IR <- mem[MAR]
+PC <- PC + 4
+
+Execute:
+MAR <- PC           # read OFF
 MBR <- mem[MAR]
 PC <- PC + 4
 RFOUT1 <- R1
 A <- RFOUT1
 B <- MBR
-C <- A + B
+C <- A + B          # EA = OFF + R1
 MAR <- C
 MBR <- mem[MAR]
-A <- MBR
-RFOUT2 <- R2
+A <- MBR            # operand 1: mem[OFF + R1]
+RFOUT2 <- R2        # operand 2: R2
 B <- RFOUT2
 C <- A + B
-RFIN <- C
+RFIN <- C           # save result to R3
 R3 <- RFIN
         \end{minted}
     \end{solution}
