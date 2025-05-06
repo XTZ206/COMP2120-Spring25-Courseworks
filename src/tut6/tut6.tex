@@ -33,7 +33,7 @@
 
     \begin{solution}
         \begin{minted}{text}
-L1:     LD    TCSR,R2
+L1:     LD      TCSR,R2
         AND     R2,#0x1,R3  # check bit 0 thermometer ready
         BZ      L1          # if not ready, loop and wait
         MOV     #0x2,R1     # set bit 1 to 1, start reading
@@ -78,9 +78,9 @@ L4:     POP     R3          # restore R3
             \mintinline{text}|ST|
              & \mintinline{text}|DISP(R1)|
              & \mintinline{text}|-|
-             & \mintinline{text}|DISP2(R3)|                     \\ \hline\hline
-            \multicolumn{4}{|c|}{\mintinline{text}|DISP1|}      \\ \hline
-            \multicolumn{4}{|c|}{\mintinline{text}|DISP2|}      \\ \hline
+             & \mintinline{text}|DISP2(R3)|                \\ \hline\hline
+            \multicolumn{4}{|c|}{\mintinline{text}|DISP1|} \\ \hline
+            \multicolumn{4}{|c|}{\mintinline{text}|DISP2|} \\ \hline
         \end{tabular}
     \end{table}
 
