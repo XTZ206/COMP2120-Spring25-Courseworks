@@ -38,17 +38,18 @@ Bit 6       =0 if odd parity, 1 if even parity
         LD      SCSR, R1
         AND     R1, #0x1, R2    # check bit 0 device error
         BNZ     END             # if error, goto END
-CHECK:  AND     R1, #0x2, R2    # check bit 1 device ready
+CHECK:  LD      SCSR, R1
+        AND     R1, #0x2, R2    # check bit 1 device ready
         BZ      CHECK           # if not ready, loop and wait
-        ST      #0x4a, SCSR     # bit pattern 01001000 
-                                # speed = 115200 bps even parity
+        ST      #0x4a, SCSR     # bit pattern 01001010
+                                # 115200bps, even parity, write, ready
         SUB     R1, R1, R1      # R1 = 0
 RUN:    LD      LINE(R1), R2    # load char from LINE[R1]
         ST      R2, SBRO        # write to output buffer register
-        ADD     R1, #0x1, R1    # R1 += 1
-        SUB     #0xa, R1, R2    # check if 10 chars are written
+        ADD     R1, #0x4, R1    # R1 += 4 (assume 1 word = 4 bytes)
+        SUB     R1, #0x28, R2   # check if 10 chars (40 bytes) are written
         BNZ     RUN             # if R1 != 10, goto RUN (continue loop)
-END:    HLT
+END:    HLT                     # write completed or escape due to error
         \end{minted}
     \end{solution}
 
@@ -87,8 +88,8 @@ C <- A + B          # EA = OFF + R1
 MAR <- C
 MBR <- mem[MAR]
 A <- MBR            # operand 1: mem[OFF + R1]
-RFOUT2 <- R2        # operand 2: R2
-B <- RFOUT2
+RFOUT2 <- R2
+B <- RFOUT2         # operand 2: R2
 C <- A + B
 RFIN <- C           # save result to R3
 R3 <- RFIN
