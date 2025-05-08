@@ -3,7 +3,7 @@
 \usepackage{multirow}
 \usepackage{minted}
 
-\title{COMP2120 Assignment 4}
+\title{COMP2120 Assignment 5}
 \author{YUAN Wenxuan (UID: 3036292740)}
 \date{\today}
 \pagestyle{plain}
@@ -41,7 +41,7 @@ Bit 6       =0 if odd parity, 1 if even parity
 CHECK:  LD      SCSR, R1
         AND     R1, #0x2, R2    # check bit 1 device ready
         BZ      CHECK           # if not ready, loop and wait
-        ST      #0x4a, SCSR     # bit pattern 01001010
+        ST      #0x4a, SCSR     # bit pattern 100 1010
                                 # 115200bps, even parity, write, ready
         SUB     R1, R1, R1      # R1 = 0
 RUN:    LD      LINE(R1), R2    # load char from LINE[R1]
