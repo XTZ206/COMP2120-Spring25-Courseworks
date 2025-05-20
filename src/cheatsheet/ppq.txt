@@ -1,0 +1,58 @@
+2023 May
+    Mary has a desktop computer running on processor AT5, and a mobile phone running on processor XT6. Both AT5 and XT6 has clock rate of 3.5GHz. Can we conclude that the desktop and mobile phone have the same speed? Why?
+    What are the direct addressing mode and indirect addressing mode?
+    Once the cache has been filled, a replacement algorithm is needed. What are FIFO and LRU replacement algorithms?
+    Peter has a laptop computer with 4GB memory, 64GB SSD. The system does not have enough memory, and virtual memory is needed. Explain whether the SSD is suitable for the page file? Explain your answer.
+    Which RAID schemes (0-6) can achieve the highest reliability? How many extra hard disks are required for it?
+    Show that AND and NOT gates form a functionally complete set.
+    Besides Programmed I/O, what are the other two I/O techniques. Why Programmed I/O is not desirable in high performance systems?
+    Write down how to implement floating-point multiplication
+    For the floating-point addition, the first two steps are zero check and significand alignment (making two exponent equal). Next, two significands are added together, there is the possibility of significand overflow. Write down how to deal with this overflow.
+    Explain the relationship between Split Cache and pipeline hazards
+
+
+
+2021 May
+    Peter has a laptop computer with 4GB memory, 64GB SSD. The laptop is standalone, and there is no network connection. Today, when Peter is working on his assignment, he found that the LED of the SSD was flashing all the time, and the system is running very slowly. Explain what is happening in his laptop, why it is running slowly, and what remedial action can be done.
+    Consider two processors, codenamed IA8 and XT5. IA8 runs at 2GHz clock rate while XT5 runs at 800MHz. Which one is faster? Explain your answer.
+    A system uses paging for memory management. Describe briefly how memory protection is done. A subscript out of bound access error is when an array of size n is declared, int a[n], and the element accessed is outside the valid range, such as a[n+1]. Explain why sometimes, subscript out of bound error results in Segmentation Fault (or memory protection violation), and sometimes not.
+    When does the CPU check interrupt in the instruction execution cycle? Why?
+    What is DMA? Explain how the DMA controller can access the memory without conflict with the CPU.
+
+
+2020 May
+    Write down the equation governing the relationship between program execution time and clock rate.
+    Given two CPUs, XPU1 and XPU2. XPU1 runs at 4GHz while XPU2 runs at 3GHz. Which is faster? Explain.
+    Explain why stack pointer is not used in accessing the local variables and function parameters in a stack frame?
+    Show how displacement addressing can be used for this purpose.
+    Most arithmetic operations require 3 operands, two source operands and one destination operand. Explain where the operands are fow two-operand, one-operand, and zero-operand instructions.
+    A CPU executes in either user mode or supervisor mode. In which mode is a user program and the Operating System running? How can a user program switch to supervisor mode to access system services>
+    Let the excess-b representation of two numbers be P1 and P2 respectively. What is the excess-b representation of their sum and difference? Prove that your answer is correct.
+    What is Principle of Locality for memory access?
+    Discuss if data access (global and local variables) satisfies this principle.
+    Explain why 2-way set associative cache always has a smaller cache miss rate. Why direct-mapped cache is still used?
+    How many extra hard disks are required for a level-5 and level-6 RAID system?
+    What is the data efficiency of them? (i.e. usable capacity / total capacity)
+    In a level 5 RAID, suppose one of the hard disk fails. How can you reconstruct the content of the failed hard disk? What happens where there is another hard disk failure during the reconstruction process?
+    What kind of pipeline hazard exists in the following sequence of one-operand instructions? Explain `ADD R1; SUB R4;`
+    What is the CPI value for an ideal pipeline? Explain how we can achieve a CPI value smaller than the ideal pipeline.
+    Consider a CPU whose clock rate is 2GHz. Assume all instructions require 2 clock cycles. A particular feature, used 5% of the time, requires 5 instructions to implement. We can also use a new instruction to implement this feature, where the new instruction requires 4 clock cycles, but the clock cycle time will be increased by 0.5%. Write down the average time to execute 1000 (new) instructions for both cases. (i.e. in case 1, there will be 950 instructions + 50 * 5 instructions, while in case 2, there will be 950 normal instructions and 50 new instructions). Which is faster? Show your work.
+    Besides Programmed I/O there are two other I/O techniques that require less CPU intervention. Describe what they are, and how they require less CPU intervention.
+    Which of the above I/O technique is more suitable for a Gigabit Ethernet controller? Explain.
+
+2019 May
+    What is the correct value of x in 11010x110 if that bit is dead, assuming even parity is used. x = 1
+    What is the rotational latency for a hard disk with rotational speed of R rpm. Give a short explanation.
+    Suggest two use of displacement addressing mode. Write down a short explanation for each of them.
+    Suggest a scenario where you can obtain a Clock Per Instruction (CPI) value of less than 1.
+    Write down the 3 kinds of I/O techniques, in order of increasing CPU intervention.
+    What is the rule for sign extension from m-bit 2's complement number to n-bit 2's complement number, where n > m. Show that the algorithm is correct.
+    In this representation scheme, we cannot represent the value 0. Suggest a way how this can be solved.
+    Another designer uses the same bit allocation for sign, exponent, and significand, but uses a different exponent base. Write down one advantage and one disadvantage of this scheme.
+    When will the processor usually check for interrupts?
+    What is the problem with such a long executing instruction?
+    What are the 3 kinds of pipeline hazards? Describe each of them in not more than 2 lines.
+    What pipeline hazard exists for a branch instruction? Suggest one way to alleviate such pipeline hazard. Give a short explanation.
+    Why do we prefer register operands to memory operands for arithmetic/logic operations?
+    What is the advantage of a regular instruction format, i.e. the source and destination operands are always in the same place in the instruction.
+    Explain the difference between arithmetic shift and logical shift.
