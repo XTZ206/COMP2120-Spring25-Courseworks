@@ -15,7 +15,7 @@ No part of or all of the repository may be distributed or reproduced in any form
   - `asm`: assignment source code or written materials
   - `tut`: tutorial source code or written materials
   - `utils`: utility program source code used for multiple assignments
-  - `quiz` : quiz written materials
-  - `cheatsheet`: cheat sheet prepared for the course exam
+  - `quiz`: quiz written materials
+  - `cheatsheet`: a cheat sheet prepared for the course exam
 - `media`: Pictures and videos used in the assignment
 - `dist`: Compiled files for the assignment and tutorial solutions.
